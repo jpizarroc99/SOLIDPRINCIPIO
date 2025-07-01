@@ -1,0 +1,70 @@
+S - Single Responsibility Principle (SRP)
+Principio de Responsabilidad Única
+
+✅ ¿Qué significa?
+Una clase debe tener una única razón para cambiar, es decir, una sola responsabilidad o función bien definida.
+
+Esto quiere decir que cada clase debe encargarse de una sola parte del comportamiento del sistema, y nada más. Si una clase hace muchas cosas distintas, es más difícil de mantener, probar o modificar sin romper otras funcionalidades.
+
+🧠 Ejemplo simple:
+Supón que tienes una clase Reporte que:
+
+Genera un reporte de ventas.
+
+Imprime el reporte.
+
+Lo guarda en disco.
+
+java
+Copiar
+Editar
+public class Reporte {
+    public void generar() {
+        // Lógica de generación
+    }
+
+    public void imprimir() {
+        // Lógica de impresión
+    }
+
+    public void guardar() {
+        // Lógica de guardado
+    }
+}
+Esta clase viola SRP porque tiene tres responsabilidades: generar, imprimir y guardar.
+
+✅ Aplicando SRP correctamente:
+Separas esas responsabilidades en diferentes clases:
+
+java
+Copiar
+Editar
+public class GeneradorReporte {
+    public void generar() {
+        // Solo genera el contenido del reporte
+    }
+}
+
+public class ImpresoraReporte {
+    public void imprimir(String reporte) {
+        // Solo se encarga de imprimir
+    }
+}
+
+public class GuardadorReporte {
+    public void guardar(String reporte) {
+        // Solo se encarga de guardar
+    }
+}
+Ahora, cada clase tiene una sola responsabilidad, y puede cambiar independientemente si cambia la lógica de generación, impresión o guardado.
+
+🧩 Beneficios del SRP:
+Código más modular y legible.
+
+Facilita las pruebas unitarias.
+
+Favorece la reutilización de componentes.
+
+Reduce el riesgo de errores colaterales al hacer cambios.
+
+¿Te gustaría que te dé un ejemplo más completo en Java aplicando el SRP con un caso más realista como una aplicación bancaria o de usuarios? Puedes seguir con ejemplo Java de SRP, los otros principios de SOLID o por qué SRP mejora el mantenimiento.
