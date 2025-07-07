@@ -67,4 +67,91 @@ Favorece la reutilización de componentes.
 
 Reduce el riesgo de errores colaterales al hacer cambios.
 
-¿Te gustaría que te dé un ejemplo más completo en Java aplicando el SRP con un caso más realista como una aplicación bancaria o de usuarios? Puedes seguir con ejemplo Java de SRP, los otros principios de SOLID o por qué SRP mejora el mantenimiento.
+O - Open/Closed Principle (OCP)
+(Principio de Abierto/Cerrado)
+
+📘 Definición:
+El Open/Closed Principle fue formulado por Bertrand Meyer y forma parte de los principios SOLID, popularizados por Robert C. Martin (Uncle Bob). Este principio establece lo siguiente:
+
+"Las entidades de software (clases, módulos, funciones, etc.) deben estar abiertas para la extensión, pero cerradas para la modificación."
+
+💡 ¿Qué significa esto?
+"Abiertas para la extensión":
+
+Significa que una clase debe poder añadir nuevas funcionalidades o comportamientos sin necesidad de alterar su código fuente original.
+
+Esto se logra mediante herencia, composición o interfaces, permitiendo que el software evolucione sin romper lo que ya funciona.
+
+"Cerradas para la modificación":
+
+Significa que no debes tener que modificar el código existente de una clase para cambiar su comportamiento. Esto evita introducir errores en código que ya está probado y en producción.
+
+🔧 Ejemplo clásico:
+Supongamos que tienes una clase para calcular el área de figuras geométricas:
+
+python
+Copiar
+Editar
+class AreaCalculator:
+    def calculate_area(self, shape):
+        if shape["type"] == "rectangle":
+            return shape["width"] * shape["height"]
+        elif shape["type"] == "circle":
+            return 3.14 * shape["radius"] ** 2
+Este enfoque viola el principio OCP porque si quieres añadir otro tipo de figura (por ejemplo, triángulo), debes modificar el método calculate_area, lo cual no está cerrado a modificaciones.
+
+✅ Aplicación correcta del OCP:
+python
+Copiar
+Editar
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius ** 2
+
+class AreaCalculator:
+    def calculate_area(self, shape: Shape):
+        return shape.area()
+Ahora puedes agregar más figuras (como Triangle, Ellipse, etc.) sin modificar el código del AreaCalculator. Solo tienes que crear una nueva clase que implemente el método area().
+
+🎯 Beneficios del OCP:
+✅ Facilita el mantenimiento del código.
+
+✅ Permite una escalabilidad más segura.
+
+✅ Reduce el riesgo de introducir errores al modificar el código existente.
+
+✅ Fomenta la reutilización de código mediante abstracciones.
+
+🚫 Riesgos si no se aplica:
+Cambios pequeños pueden afectar muchas partes del sistema.
+
+Mayor posibilidad de errores al alterar código probado.
+
+Dificultad para trabajar en equipo si múltiples personas deben modificar la misma clase.
+
+Código rígido y poco adaptable al cambio.
+
+🧠 Conclusión:
+El principio de Abierto/Cerrado nos enseña a diseñar sistemas que resistan el paso del tiempo, permitiendo que evolucionen sin que necesitemos tocar el núcleo de lo que ya funciona. En pocas palabras:
+
+"Agrega comportamiento nuevo sin romper lo viejo."
+
+Es uno de los pilares de la programación robusta y escalable en proyectos medianos a grandes.
